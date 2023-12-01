@@ -1,0 +1,146 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Countries API",
+    "description": "Simple API to consult every country and capital of the world.",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/license/mit/"
+    }
+  },
+  "servers": [
+    {
+      "url": "localhost:8080/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "all",
+      "description": "All countries and their capitals"
+    },
+    {
+      "name": "country",
+      "description": "Find any country"
+    },
+    {
+      "name": "capital",
+      "description": "Find any capital"
+    }
+  ],
+  "paths": {
+    "/all": {
+      "get": {
+        "tags": [
+          "all"
+        ],
+        "summary": "Get all available countries and capitals",
+        "description": "Get all available countries and capitals",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/capital/{country}": {
+      "get": {
+        "tags": [
+          "capital"
+        ],
+        "summary": "Find any capital",
+        "description": "Find any capital by its country name",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "path",
+            "required": true,
+            "description": "The country to look for.",
+            "schema": {
+              "type": "string",
+              "example": "Dominican Republic"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Capital not found"
+          }
+        }
+      }
+    },
+    "/country/{capital}": {
+      "get": {
+        "tags": [
+          "country"
+        ],
+        "summary": "Find any country",
+        "description": "Find any country by its capital",
+        "parameters": [
+          {
+            "name": "capital",
+            "in": "path",
+            "required": true,
+            "description": "The capital to look for.",
+            "schema": {
+              "type": "string",
+              "example": "Santo Domingo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Country not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Country": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "example": "Dominican Republic"
+          },
+          "capital": {
+            "type": "string",
+            "example": "Santo Domingo"
+          }
+        }
+      }
+    }
+  }
+}
